@@ -41,7 +41,7 @@ public class Tekstieditori2 {
 	
 	private final String TITLE = "Tekstieditori";
 	private JFrame frame;
-	private JTextArea textArea;
+	private JTextArea textPane;
 	private File openFile;
 	private JTextField txtEtsi;
 
@@ -80,8 +80,8 @@ public class Tekstieditori2 {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		textArea = new JTextArea();
-		textArea.addAncestorListener(new AncestorListener() {
+		textPane = new JTextArea();
+		textPane.addAncestorListener(new AncestorListener() {
 			public void ancestorAdded(AncestorEvent arg0) {
 			}
 			public void ancestorMoved(AncestorEvent arg0) {
@@ -89,10 +89,10 @@ public class Tekstieditori2 {
 			public void ancestorRemoved(AncestorEvent arg0) {
 			}
 		});
-		textArea.setFont(new Font("Arial", Font.PLAIN, 13));
-		frame.getContentPane().add(textArea, BorderLayout.NORTH);
+		textPane.setFont(new Font("Arial", Font.PLAIN, 13));
+		frame.getContentPane().add(textPane, BorderLayout.NORTH);
 		
-		JScrollPane scrollPane = new JScrollPane(textArea);
+		JScrollPane scrollPane = new JScrollPane(textPane);
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -213,20 +213,20 @@ public class Tekstieditori2 {
 					String hakusana = txtEtsi.getText();
 					hakusana = hakusana.toLowerCase();
 					txtEtsi.setText(hakusana);
+					String rivi ="";
 					while (teksti.hasNextLine()) {
-							String rivi = teksti.nextLine();
-							int match = rivi.indexOf(hakusana);
-							
-					        textArea.setSelectionColor(Color.YELLOW);
-					        textArea.setSelectionStart(match);
-					        textArea.setSelectionEnd(match + 10);
+							rivi += teksti.nextLine()+"\n";
 					}
-					hakusana = null;
+			        teksti.close();
+					int match = rivi.indexOf(hakusana);
+					
+					textPane.setSelectionColor(Color.green);
+			        textPane.setSelectionStart(match);
+			        textPane.setSelectionEnd(match+hakusana.length());
+					
 				} catch (FileNotFoundException e) {
 					JOptionPane.showMessageDialog(null, "Tapahtui odottamaton virhe", "Virhe", JOptionPane.ERROR_MESSAGE);
-	        		return;
 				}	      
-				
 	 }
 	 
 	public void korvaa() {
@@ -265,7 +265,7 @@ public class Tekstieditori2 {
             tiedosto += lukija.nextLine()+"\n";
         }
         lukija.close();
-		textArea.setText(tiedosto);
+		textPane.setText(tiedosto);
 		
 		frame.setTitle(TITLE+" - "+openFile.getName());
 
@@ -300,7 +300,7 @@ public class Tekstieditori2 {
         		return;
         	}
             
-			String tiedosto = textArea.getText();
+			String tiedosto = textPane.getText();
         	Formatter form = new Formatter(openFile);
 			form.format("%s", tiedosto);
 			form.close();
@@ -325,7 +325,7 @@ public class Tekstieditori2 {
 	        		tallenna();
 	        	}
 	        	
-	        	textArea.setText("");
+	        	textPane.setText("");
 	        	openFile = null;
 	        	frame.setTitle(TITLE);
 	        	
@@ -338,8 +338,7 @@ public class Tekstieditori2 {
 	private void sammuta() {
 		
 			if(openFile==null) {
-					JOptionPane.showMessageDialog(null, "Tiedoston sulkeminen epäonnistui, ei valittua tiedostoa!", "Virhe", JOptionPane.ERROR_MESSAGE);
-					return;
+				System.exit(0);	
 			}
  
 			try {
