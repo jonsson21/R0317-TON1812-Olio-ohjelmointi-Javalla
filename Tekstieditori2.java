@@ -1,11 +1,10 @@
-package tehtava1;
+package tunti;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Desktop;
 
 import javax.swing.JScrollPane;
@@ -37,13 +36,14 @@ import javax.swing.event.AncestorEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Tekstieditori2 {
+public class tekstieditori2 {
 	
 	private final String TITLE = "Tekstieditori";
 	private JFrame frame;
 	private JTextArea textPane;
 	private File openFile;
 	private JTextField txtEtsi;
+	private JTextField txtKorvaa;
 
 	/**
 	 * Launch the application.
@@ -54,7 +54,7 @@ public class Tekstieditori2 {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					
-					Tekstieditori2 window = new Tekstieditori2();
+					tekstieditori2 window = new tekstieditori2();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -66,7 +66,7 @@ public class Tekstieditori2 {
 	/**
 	 * Create the application.
 	 */
-	public Tekstieditori2() {
+	public tekstieditori2() {
 		initialize();
 	}
 
@@ -103,7 +103,7 @@ public class Tekstieditori2 {
 		
 		JMenuItem mntmAvaa = new JMenuItem("Avaa");
 		mntmAvaa.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-		mntmAvaa.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
+		mntmAvaa.setIcon(new ImageIcon(tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/Directory.gif")));
 		mntmAvaa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -113,7 +113,7 @@ public class Tekstieditori2 {
 		mnTiedosto.add(mntmAvaa);
 		
 		JMenuItem mntmTallennaNimell = new JMenuItem("Tallenna nimell\u00E4");
-		mntmTallennaNimell.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/HardDrive.gif")));
+		mntmTallennaNimell.setIcon(new ImageIcon(tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/HardDrive.gif")));
 		mntmTallennaNimell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -124,7 +124,7 @@ public class Tekstieditori2 {
 		
 		JMenuItem mntmTallenna = new JMenuItem("Tallenna");
 		mntmTallenna.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-		mntmTallenna.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
+		mntmTallenna.setIcon(new ImageIcon(tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
 		mntmTallenna.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -134,7 +134,7 @@ public class Tekstieditori2 {
 		mnTiedosto.add(mntmTallenna);
 		
 		JMenuItem mntmSulje = new JMenuItem("Sulje");
-		mntmSulje.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
+		mntmSulje.setIcon(new ImageIcon(tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
 		mntmSulje.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -144,7 +144,7 @@ public class Tekstieditori2 {
 		mnTiedosto.add(mntmSulje);
 		
 		JMenuItem mntmSammuta = new JMenuItem("Sammuta");
-		mntmSammuta.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/ocean/close-pressed.gif")));
+		mntmSammuta.setIcon(new ImageIcon(tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/ocean/close-pressed.gif")));
 		mntmSammuta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				sammuta();
@@ -152,26 +152,13 @@ public class Tekstieditori2 {
 		});
 		mnTiedosto.add(mntmSammuta);
 		
-		JMenu mnTykalut = new JMenu("Ty\u00F6kalut");
-		menuBar.add(mnTykalut);
 		
-		JMenuItem mntmEtsi = new JMenuItem("Etsi");
-		mntmEtsi.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/ocean/expanded.gif")));
-		mntmEtsi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-			}
-		});
-		mntmEtsi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
-		mntmEtsi.setSelectedIcon(new ImageIcon(Tekstieditori2.class.getResource("/com/sun/java/swing/plaf/windows/icons/File.gif")));
-		mnTykalut.add(mntmEtsi);
 		
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
 		JMenuItem mntmTietoaMeist = new JMenuItem("Tietoa meist\u00E4");
-		mntmTietoaMeist.setIcon(new ImageIcon(Tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
+		mntmTietoaMeist.setIcon(new ImageIcon(tekstieditori2.class.getResource("/javax/swing/plaf/metal/icons/Inform.gif")));
 		mntmTietoaMeist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -204,6 +191,26 @@ public class Tekstieditori2 {
 		menuBar.add(txtEtsi);
 		txtEtsi.setColumns(10);
 		
+		txtKorvaa = new JTextField();
+		txtKorvaa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				txtKorvaa.setText("");
+				txtKorvaa.setEnabled(true);
+			}
+		});
+		txtKorvaa.setText("Korvaa");
+		txtKorvaa.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent arg0) {
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
+					korvaa();
+				}
+			}
+		});
+		
+		menuBar.add(txtKorvaa);
+		txtKorvaa.setColumns(10);
+		
 		
 	}
 		
@@ -213,16 +220,21 @@ public class Tekstieditori2 {
 					String hakusana = txtEtsi.getText();
 					hakusana = hakusana.toLowerCase();
 					txtEtsi.setText(hakusana);
+					String koko = "";
 					String rivi ="";
 					while (teksti.hasNextLine()) {
-							rivi += teksti.nextLine()+"\n";
+							rivi = teksti.nextLine()+"\n";
+							
+							if(rivi.indexOf(hakusana) > -1) {	
+								koko += rivi;
+								
+							}
+							
 					}
+					textPane.setText(koko);
 			        teksti.close();
-					int match = rivi.indexOf(hakusana);
 					
-					textPane.setSelectionColor(Color.green);
-			        textPane.setSelectionStart(match);
-			        textPane.setSelectionEnd(match+hakusana.length());
+
 					
 				} catch (FileNotFoundException e) {
 					JOptionPane.showMessageDialog(null, "Tapahtui odottamaton virhe", "Virhe", JOptionPane.ERROR_MESSAGE);
@@ -230,8 +242,31 @@ public class Tekstieditori2 {
 	 }
 	 
 	public void korvaa() {
+		try {
+			Scanner teksti = new Scanner(openFile);
+			String hakusana = txtEtsi.getText();
+			String korvaus = txtKorvaa.getText();
+			hakusana = hakusana.toLowerCase();
+			korvaus = korvaus.toLowerCase();
+			txtKorvaa.setText(korvaus);
+			String rivi ="";
+			while (teksti.hasNextLine()) {
+					rivi += teksti.nextLine()+"\n";
+					
+			}
+			if(rivi.indexOf(hakusana) > -1) {	
+				textPane.setText(rivi.replaceAll(hakusana, korvaus));
+				
+			}
 		
-	}			
+	        teksti.close();
+			
+
+			
+		} catch (FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Tapahtui odottamaton virhe", "Virhe", JOptionPane.ERROR_MESSAGE);
+		}	      
+}		
 
 	
 	private void help() throws URISyntaxException {
